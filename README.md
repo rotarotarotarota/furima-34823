@@ -23,13 +23,9 @@
 ## addressesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|user_id|references||
-|destination_first_name|string|null: false|
-|destination_last_name|string|null: false|
-|destination_first_name_kana|string|null: false|
-|destination_last_name_kana|string|null: false|
-|postal_code|integer|null: false|
-|prefecture_id|references|null: false|
+|user_id|references|foreign_key: true|
+|postal_code|string|null: false|
+|prefecture_id|integer|null: false|
 |city|string|null: false|
 |block|string|null: false|
 |building|string||
@@ -46,14 +42,11 @@
 |name|string|null: false|
 |explain|text|null: false|
 |category_id|integer|null: false, foreign_key: true|
-|brand|text||
 |state_id|integer|null: false|
 |shipping_burden_id|integer|null: false|
 |prefecture_id|integer|null: false|
 |shipping_day_id|integer|null: false|
 |price|integer|null: false|
-|seller_id|references|null: false, foreign_key: { to_table: :users }|
-|buyer_id|references|foreign_key: { to_table: :users }|
 
 ### Association
 - belongs_to :seller, class_name: "User"
@@ -75,16 +68,6 @@
 
 ### Association
 - belongs_to: item
-- belongs_to: user
-
-## credit_card
-|column|type|options|
-|------|----|-------|
-|user_id|references|null:false, foreign_key: true|
-|card_id|string|null:false|
-|customer_id|string|null:false|
-
-### Association
 - belongs_to: user
 
 ## sns_authentcationsテーブル
