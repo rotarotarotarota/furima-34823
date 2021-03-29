@@ -23,16 +23,16 @@
 ## addressesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|user_id|references|foreign_key: true|
+|user|references|null: false|
 |postal_code|string|null: false|
-|prefecture_id|integer|null: false|
+|prefecture_id|integer|null: false,foreign_key: true|
 |city|string|null: false|
 |block|string|null: false|
 |building|string||
-|phone_numeber|string||
+|phone_number|string|null:false|
 
 ### Association
-- belongs_to: user, optional: true
+- belongs_to: purchase management, optional: true
 - belongs_to_active_hash :prefecture
 
 ## itemsテーブル
@@ -42,10 +42,10 @@
 |name|string|null: false|
 |explain|text|null: false|
 |category_id|integer|null: false, foreign_key: true|
-|state_id|integer|null: false|
-|shipping_burden_id|integer|null: false|
-|prefecture_id|integer|null: false|
-|shipping_day_id|integer|null: false|
+|state_id|integer|null: false, foreign_key: true|
+|shipping_burden_id|integer|null: false,foreign_key: true|
+|prefecture_id|integer|null: false,foreign_key: true|
+|shipping_day_id|integer|null: false,foreign_key: true|
 |price|integer|null: false|
 
 ### Association
@@ -62,27 +62,32 @@
 ## commentsテーブル
 |Column|Type|Options|
 |------|----|-------|
-|user_id|references|null: false, foreing_key: true|
-|item_id|references|null: false, foreing_key: true|
+|user_id|references|null: false, foreign_key: true|
+|item_id|references|null: false, foreign_key: true|
 |text|text|null: false|
 
 ### Association
 - belongs_to: item
 - belongs_to: user
 
-## sns_authentcationsテーブル
+## sns_authenticationsテーブル
 |Column|Type|Options|
 |------|----|-------|
 |provider|string||
 |uid|string||
-|user_id|references|foreing_key: true|
+|user_id|references|foreign_key: true|
 
 ### Association
 - belongs_to: user, optional: true
 
-## Purchase managementテーブル
+## purchase managementテーブル
 |Column|Type|Options|
 |------|----|-------|
 |user  |references|null:false,foreign_key: true|
 |customer_id|string|null:false|
 |card_id|string|null:false|
+
+### Association
+ belong_to: user
+ has one: item
+ has one: address
