@@ -6,7 +6,7 @@
 |---------------|------|------------------------|
 |nickname       |string|null: false             |
 |email          |string|null: false,unique: true|
-|password       |string|null: false             |
+|encrypted_password       |string|null: false             |
 |first_name     |string|null: false             |
 |last_name      |string|null: false             |
 |first_name_kana|string|null: false             |
@@ -45,12 +45,12 @@
 |------|----|-------|
 |name|string|null: false|
 |explain|text|null: false|
-|category_id|references|null: false, foreign_key: true|
+|category_id|integer|null: false, foreign_key: true|
 |brand|text||
-|state_id|references|null: false|
-|shipping_burden_id|references|null: false|
-|prefecture_id|references|null: false|
-|shipping_day_id|references|null: false|
+|state_id|integer|null: false|
+|shipping_burden_id|integer|null: false|
+|prefecture_id|integer|null: false|
+|shipping_day_id|integer|null: false|
 |price|integer|null: false|
 |seller_id|references|null: false, foreign_key: { to_table: :users }|
 |buyer_id|references|foreign_key: { to_table: :users }|
@@ -65,25 +65,6 @@
 - belongs_to_active_hash :shipping_burden
 - belongs_to_active_hash :shipping_day
 - belongs_to_active_hash :prefecture
-
-## imagesテーブル
-|Column|Type|Options|
-|------|----|-------|
-|items|references|foreing_key: true|
-|src|string||
-
-### Association
-- belongs_to: item
-
-## categoriesテーブル
-|Column|Type|Options|
-|------|----|-------|
-|name|string|null: false|
-|ancestry|string||
-
-### Association
-- has_ancestry
-- has_many: items
 
 ## commentsテーブル
 |Column|Type|Options|
@@ -115,3 +96,10 @@
 
 ### Association
 - belongs_to: user, optional: true
+
+## Purchase managementテーブル
+|Column|Type|Options|
+|------|----|-------|
+|user  |references|null:false,foreign_key: true|
+|customer_id|string|null:false|
+|card_id|string|null:false|
