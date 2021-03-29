@@ -6,7 +6,7 @@
 |---------------|------|------------------------|
 |nickname       |string|null: false             |
 |email          |string|null: false,unique: true|
-|encrypted_password       |string|null: false             |
+|encrypted_password       |string|null: false   |
 |first_name     |string|null: false             |
 |last_name      |string|null: false             |
 |first_name_kana|string|null: false             |
@@ -41,11 +41,11 @@
 |------|----|-------|
 |name|string|null: false|
 |explain|text|null: false|
-|category_id|integer|null: false, foreign_key: true|
+|category_id|integer|null: false,|
 |state_id|integer|null: false, foreign_key: true|
 |shipping_burden_id|integer|null: false,foreign_key: true|
 |prefecture_id|integer|null: false,foreign_key: true|
-|shipping_day_id|integer|null: false,foreign_key: true|
+|shipping_day_id|integer|null: false|
 |price|integer|null: false|
 
 ### Association
@@ -58,27 +58,6 @@
 - belongs_to_active_hash :shipping_burden
 - belongs_to_active_hash :shipping_day
 - belongs_to_active_hash :prefecture
-
-## commentsテーブル
-|Column|Type|Options|
-|------|----|-------|
-|user_id|references|null: false, foreign_key: true|
-|item_id|references|null: false, foreign_key: true|
-|text|text|null: false|
-
-### Association
-- belongs_to: item
-- belongs_to: user
-
-## sns_authenticationsテーブル
-|Column|Type|Options|
-|------|----|-------|
-|provider|string||
-|uid|string||
-|user_id|references|foreign_key: true|
-
-### Association
-- belongs_to: user, optional: true
 
 ## purchase managementテーブル
 |Column|Type|Options|
