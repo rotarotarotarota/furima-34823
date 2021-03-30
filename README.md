@@ -1,72 +1,72 @@
-# README
+# テーブル設計
 
-## usersテーブル
+## users テーブル
 
-|Column         |Type  |Options                 |
-|---------------|------|------------------------|
-|nickname       |string|null: false             |
-|email          |string|null: false,unique: true|
-|encrypted_password       |string|null: false   |
-|first_name     |string|null: false             |
-|last_name      |string|null: false             |
-|first_name_kana|string|null: false             |
-|last_name_kana |string|null: false             |
-|birthday       |date  |null: false             |
-
-### Association
-- has_one: address, dependent: :destroy
-- has_one: credit_card, dependent: :destroy
-- has_one: sns_authentication, dependent: :destroy
-- has_many: items
-- has_many: comments, dependent: :destroy
-
-## addressesテーブル
-|Column|Type|Options|
-|------|----|-------|
-|user|references|null: false|
-|postal_code|string|null: false|
-|prefecture_id|integer|null: false,foreign_key: true|
-|city|string|null: false|
-|block|string|null: false|
-|building|string||
-|phone_number|string|null:false|
+| Column              | Type   | Option                    |
+| ------------------  | ------ | ------------------------- |
+| email               | string | null: false, unique: true |
+| encrypted_password  | string | null: false               |
+| nickname            | string | null: false               |
+| first_name          | string | null: false               |
+| last_name           | string | null: false               |
+| first_name_katakana | string | null: false               |
+| last_name_katakana  | string | null: false               |
+| birthday            | date   | null: false               |
 
 ### Association
-- belongs_to: purchase management, optional: true
-- belongs_to_active_hash :prefecture
 
-## itemsテーブル
+- has_many :items
+- has_many :user_buy_addresses
 
-|Column|Type|Options|
-|------|----|-------|
-|name|string|null: false|
-|explain|text|null: false|
-|category_id|integer|null: false,|
-|state_id|integer|null: false, foreign_key: true|
-|shipping_burden_id|integer|null: false,foreign_key: true|
-|prefecture_id|integer|null: false,foreign_key: true|
-|shipping_day_id|integer|null: false|
-|price|integer|null: false|
 
-### Association
-- belongs_to :seller, class_name: "User"
-- has_many: images, dependent: :destroy
-- belongs_to: category
-- has_many: comments, dependent: :destroy
-- belongs_to: brand
-- belongs_to_active_hash :state
-- belongs_to_active_hash :shipping_burden
-- belongs_to_active_hash :shipping_day
-- belongs_to_active_hash :prefecture
+## items テーブル
 
-## purchase managementテーブル
-|Column|Type|Options|
-|------|----|-------|
-|user  |references|null:false,foreign_key: true|
-|customer_id|string|null:false|
-|card_id|string|null:false|
+| Column             | Type      | Option                          |
+| ---------------    | -------   | --------------------------      |
+| name               | string    | null: false                     |
+| concept            | text      | null: false                     |
+| category_id        | integer   | null: false                     |
+| item_status_id     | integer   | null: false                     |
+| delivery_price_id  | integer   | null: false                     |
+| delivery_area_id   | integer   | null: false                     |
+| delivery_date_id   | integer   | null: false                     |
+| price              | integer   | null: false                     |
+| user               | references | null: false, foreign_key: true |
 
 ### Association
- belong_to: user
- has one: item
- has one: address
+
+- belongs_to :user
+- has_one :user_buy_address
+
+
+
+## user_buy_addresses テーブル
+
+| Column      | Type       | Option                         |
+| ----------  | ---------- | ------------------------------ |
+| user         | references | null: false, foreign_key: true |
+| item        | references | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :buy_address
+
+## buy_addresses テーブル
+
+| Column           | Type          | Option                         |
+| ------------     | ------------- | --------------------------     |
+| address_line     | string        | null: false                    |
+| delivery_area_id | integer       | null: false                    |
+| city             | string        | null: false                    |
+| block_number     | string        | null: false                    |
+| city_bill        | string        |                                |
+| phone_number     | string        | null: false                    |
+| user_buy_address | references    | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :user_buy_address
