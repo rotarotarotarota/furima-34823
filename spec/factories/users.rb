@@ -1,13 +1,15 @@
+Faker::Config.locale = :ja
+
 FactoryBot.define do
   factory :user do
-    nickname              {Faker::Name.initials(number: 2)}
-    email                 {Faker::Internet.free_email}
-    password              {"aaaa11"}
-    password_confirmation {password}
-    first_name            {"田中"}
-    last_name             {"太郎"}
-    first_name_katakana   {"タナカ"}
-    last_name_katakana    {"タロウ"}
-    birthday              {'1999-01-01'}
+    nickname              { Faker::Name.name }
+    email                 { Faker::Internet.free_email }
+    password              { '1A2B3C4D' }
+    password_confirmation { password }
+    last_name             { Faker::Name.last_name }
+    first_name            { Faker::Name.first_name }
+    last_name_kana        { Faker::Base.regexify(/[アイウエオン]{2,6}/) }
+    first_name_kana       { Faker::Base.regexify(/[アイウエオン]{2,6}/) }
+    date_of_birth         { Date.new(2000, 5, 30) }
   end
 end
