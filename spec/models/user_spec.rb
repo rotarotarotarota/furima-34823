@@ -35,7 +35,6 @@ RSpec.describe 'ユーザー新規登録', type: :model do
 
     it '重複したemailが存在する場合登録できない' do
       @user.save
-      # binding.pry
       another_user = FactoryBot.build(:user)
       another_user.email = @user.email
       another_user.valid?
@@ -114,7 +113,7 @@ RSpec.describe 'ユーザー新規登録', type: :model do
       @user.birthday = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Birthday can't be blank")
-    end      
+    end
 
     it "パスワードに半角英数字が混合されていれば登録ができる" do
       @user.password = "aaaaaa"
