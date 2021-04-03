@@ -1,23 +1,20 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
-  NAME_REGEX = /\A[ぁ-んァ-ヶ一-龥々]+\z/.freeze
-  NAME_KANA_REGEX = /[\p{katakana}ー－&&[^ -~｡-ﾟ]]+/.freeze
-
-  with_options format: { with: PASSWORD_REGEX, message: 'must include both letters and numbers' } do
-    validates :password
-  end
+  has_many :items
+  
   with_options presence: true do
-    validates :nickname, :date_of_birth
-    with_options format: { with: NAME_REGEX, message: 'must be full-width characters' } do
-      validates :last_name, :first_name
+    validates :nickname
+    validates :birthday
+    with_options format: { with: /\A[ぁ-んァ-ン一-龠々]+\z/, message: "is invalid. Input full-width characters."} do
+      validates :last_name
+      validates :first_name
     end
-    with_options format: { with: NAME_KANA_REGEX, message: 'must be full-width katakana characters' } do
-      validates :last_name_kana, :first_name_kana
+    with_options format: { with: /\A[ァ-ヶー－]+\z/, message: "は全角カタカナでの入力が必要。"} do
+      validates :kana_last_name 
+      validates :kana_first_name
     end
   end
+    validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i, message: "は半角英数字混合での入力が必要。"}
 end
