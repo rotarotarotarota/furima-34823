@@ -4,7 +4,7 @@ RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
   end
-  
+
   describe "商品出品" do
     context '出品できる時' do
       it "全ての項目に正しく入力されていれば登録できる" do
@@ -59,12 +59,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
       it "priceが300未満だと登録できない" do
-        @item.price = "299"
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include("Price は300~9,999,999の範囲の半角数字での入力が必要")
       end
       it "priceが9,999,999より大きいと登録できない" do
-      @item.price = "10000000"
+      @item.price = 10000000
       @item.valid?
       expect(@item.errors.full_messages).to include("Price は300~9,999,999の範囲の半角数字での入力が必要")
       end
