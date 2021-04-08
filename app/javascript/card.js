@@ -3,7 +3,7 @@ const pay = () => {
   const form = document.getElementById("charge-form")
   form.addEventListener("submit", (e) => {
     e.preventDefault()
-    
+
     const formResult = document.getElementById("charge-form")
     const formData = new FormData(formResult)
 
@@ -32,3 +32,4 @@ const pay = () => {
   })
 }
 window.addEventListener("load", pay)
+// 環境変数
