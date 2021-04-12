@@ -70,5 +70,3 @@
 ### Association
 
 - belongs_to :user_buy_address
-
-new
