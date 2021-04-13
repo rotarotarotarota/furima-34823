@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :check_user, only: [:edit, :update, :destroy]
   before_action :check_sold_item, only: [:edit, :update]
-  before_action :search_item, only: [:index, :search]
+
   def index
     @item = Item.order('created_at DESC')
   end
@@ -40,9 +40,6 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-  def search
-    @items = @p.result.includes(:category)
-  end
   private
 
   def item_params
@@ -60,9 +57,5 @@ class ItemsController < ApplicationController
 
   def check_sold_item
     redirect_to root_path if @item.order != nil
-  end
-
-  def search_item
-    @p = Item.ransack(params[:q])  # 検索オブジェクトを生成
   end
 end
